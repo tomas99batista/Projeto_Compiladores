@@ -4,7 +4,7 @@ Projeto Compiladores - ANTLR4 | UA 2018/19
 
 Conversão Unidades
 
-(https://github.com/tomas99batista "Tomás Batista")		    | 89296
+[I'm an inline-style link with title](https://github.com/tomas99batista "Tomás Batista")		    | 89296
 
 João Dias		        | 89236
 
