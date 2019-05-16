@@ -64,7 +64,7 @@ Fases:
 7. Concretização completa do compilador.
 
 ## Avaliação
-
+Pontos de Avaliação:
 1. Concepção da linguagem. A simplicidade e expressividade da linguagem definida serão aspectos a valorizar.
 2. Gramáticas desenvolvidas.
 3. Análise semântica.
