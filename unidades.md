@@ -1,0 +1,21 @@
+# Unidades
+
+| Unidade | Símbolo | Equivalência
+| :-------------: | :-------------: | :-------------: |
+| Quilo  | k  | 100 m |
+| Hecto | h  | 100 m |
+| Deca | da  | 10 |
+| **---**  | **---**  | **1** |
+| Deci | d  | 0.1 |
+| Centi  | c  | 0.01 |
+| Mili  | m | 0.001 |
+
+
+| Grandeza | Unidade | Símbolo
+| :-------------: | :-------------: | :-------------: |
+| Comprimento  | metro | m |
+| Massa | quilograma | kg |
+| Tempo | segundo  | s |
+
+#### https://pt.wikipedia.org/wiki/Sistema_Internacional_de_Unidades
+
