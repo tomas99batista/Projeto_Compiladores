@@ -1,9 +1,10 @@
 # Projeto_Compiladores
-# Conversão Unidades
 
 Projeto Compiladores - ANTLR4 | UA 2018/19
 
-Tomás Batista		    | 89296
+Conversão Unidades
+
+(https://github.com/tomas99batista "Tomás Batista")		    | 89296
 
 João Dias		        | 89236
 
