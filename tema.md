@@ -19,10 +19,15 @@ Linguagem para análise dimensional (fı́sica). A especificação de dimensões
 
 Implementação operações:
 • Definição de variáveis;
+
 • Operações interactivas com o utilizador;
+
 • Definição de expressões que definam uma álgebra sobre elementos da linguagem (números, figuras, tabelas, imagens, ...);
+
 • Instruções iterativas;
+
 • Expressões booleanas (predicados) e instruções condicionais;
+
 • Funções.
 
 ## Avaliação
@@ -43,5 +48,7 @@ Poder-se-ia ter uma linguagem de especificação (interpretada) para definir dim
 
 Seria necessário aplicar uma álgebra dimensional (neste projecto, aplicável apenas a números inteiros e reais) com as seguintes regras:
 • somas e subtracções apenas para a mesma dimensão (ex: 1s + 50ms, para a dimensão tempo);
+
 • multiplicações e divisões aplicáveis a expressões dimensionais a gerar outra dimensão (ex: 1m/10s, a gerar a dimensão m/s);
+
 • multiplicações e divisões por expressões adimensionais a manter a mesma dimensão (ex: 5s*100).
