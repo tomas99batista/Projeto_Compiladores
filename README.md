@@ -1,7 +1,7 @@
 # Projeto_Compiladores
-Projeto Compiladores - ANTLR4 | UA 2018/19
+# Conversão Unidades
 
-# Tema: Conversão Unidades
+Projeto Compiladores - ANTLR4 | UA 2018/19
 
 Tomás Batista		    | 89296
 
