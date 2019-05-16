@@ -18,6 +18,7 @@ Fases:
 Linguagem para análise dimensional (fı́sica). A especificação de dimensões e unidades (metros, segundos, nano, micro, ...) pode ser feita numa linguagem separada, sendo o compilador aplicável a uma linguagem de programação que se aproxime qb. de uma linguagem de uso genérico
 
 Implementação operações:
+
 • Definição de variáveis;
 
 • Operações interactivas com o utilizador;
@@ -47,6 +48,7 @@ Seria assim interessante haver soluções práticas para este tipo de problemas 
 Poder-se-ia ter uma linguagem de especificação (interpretada) para definir dimensões e unidades, que definiria novos tipos de dados (numéricos) que poderiam ser utilizados com segurança na linguagem genérica (compilada), evitando dessa forma, erros dimensionais nesse código.
 
 Seria necessário aplicar uma álgebra dimensional (neste projecto, aplicável apenas a números inteiros e reais) com as seguintes regras:
+
 • somas e subtracções apenas para a mesma dimensão (ex: 1s + 50ms, para a dimensão tempo);
 
 • multiplicações e divisões aplicáveis a expressões dimensionais a gerar outra dimensão (ex: 1m/10s, a gerar a dimensão m/s);
