@@ -2,8 +2,8 @@
 
 | Unidade | Símbolo | Equivalência
 | :-------------: | :-------------: | :-------------: |
-| Quilo  | k  | 100 m |
-| Hecto | h  | 100 m |
+| Quilo  | k  | 100 |
+| Hecto | h  | 100 |
 | Deca | da  | 10 |
 | **---**  | **---**  | **1** |
 | Deci | d  | 0.1 |
