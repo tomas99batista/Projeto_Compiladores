@@ -41,9 +41,12 @@ Implementação operações:
 6. Geração de código (será valorizado o uso de uma linguagem destino mais “baixo nı́vel”).
 
 ## Linguagem para análise dimensional
-Pretende-se estender o sistema de tipos de uma linguagem de programação (tanto quanto baste, de uso geral) com a possibilidade de definir dimensões distintas (e interoperáveis) a expressões numéricas (e como tal, a variáveis e outras entidades com tipos da linguagem). 1
+Pretende-se estender o sistema de tipos de uma linguagem de programação (tanto quanto baste, de uso geral) com a possibilidade de definir dimensões distintas (e interoperáveis) a expressões numéricas (e como tal, a variáveis e outras entidades com tipos da linguagem).
+
 Por exemplo, poder definir tipos de dados distância e tempo (expressáveis, por exemplo, com unidades metro [m] e segundo [s]) e poder definir um novo tipo de dados velocidade como sendo distância/tempo [m/s]. O sistema de tipos da linguagem não só deve permitir álgebra sobre dimensões existentes, com validar a respectiva correcção (atribuir e/ou somar distância com tempo não deve ser permitido, muito embora ambos sejam números).
+
 Muito embora seja na área da fı́sica que as questões dimensionais sejam mais conhecidas, na realidade todos os programadores são confrontados com este tipo de problemas. Por exemplo, sempre que definimos uma variável inteira para percorrer ı́ndices de um array com um histograma de idades, não faz sentido que ela possa ser misturada com outra variável, também inteira, mas que represente o número de porcos de uma quinta.
+
 Seria assim interessante haver soluções práticas para este tipo de problemas (o uso do sistema de tipos estáticos de linguagens de programação seria uma solução com grandes potencialidades).
 Poder-se-ia ter uma linguagem de especificação (interpretada) para definir dimensões e unidades, que definiria novos tipos de dados (numéricos) que poderiam ser utilizados com segurança na linguagem genérica (compilada), evitando dessa forma, erros dimensionais nesse código.
 
