@@ -8,16 +8,16 @@ Tempo -> segundo (s)
 
 
 ## Variáveis
-var varName $unidade = x;  // Definição da variável, unidade e valor
+var varName $unidade = x  // Definição da variável, unidade e valor
 
-    varName = z;    // Redefinição do valor da variável mas não da unidade
+    varName = z    // Redefinição do valor da variável mas não da unidade
     
-    varName $outraUnidadeCompativel;    // Redefinição da unidade da variável para outra unidade compatível
+    varName $outraUnidadeCompativel    // Redefinição da unidade da variável para outra unidade compatível
     
 
 // Exemplo:
 
-var p $m = 5;    // p = 5 metros
+var p $m = 5    // p = 5 metros
 
 ### Operação com variáveis
 SI = grama | metro | segundo
@@ -66,7 +66,7 @@ elif () { }
 
 switch () {
     case 'x':
-        break;
+        break
 }
 
 ## Comparadores
