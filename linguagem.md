@@ -8,7 +8,7 @@ Tempo -> segundo (s)
 
 
 ## Variáveis
-var varName $unidade = x  // Definição da variável, unidade e valor
+varName $unidade = x  // Definição da variável, unidade e valor
 
     varName = z    // Redefinição do valor da variável mas não da unidade
     
@@ -17,7 +17,7 @@ var varName $unidade = x  // Definição da variável, unidade e valor
 
 // Exemplo:
 
-var p $m = 5    // p = 5 metros
+p $m = 5    // p = 5 metros
 
 ### Operação com variáveis
 SI = grama | metro | segundo
@@ -34,10 +34,10 @@ Caso especifiado qual a unidade que quer, converte para a unidade pedida, exempl
 
 $m($mm x $mm) // Converte para metros
 
-var p $mm = $m x $m //Converte para milímetro porque foi pedido na definição da variável
+p $mm = $m x $m //Converte para milímetro porque foi pedido na definição da variável
 
 ## Colections
-var varName $unidade = [x, y, z]    // x, y, z têm todos a mesma unidade, impossível fazer um array de unidades diferentes
+varName $unidade = [x, y, z]    // x, y, z têm todos a mesma unidade, impossível fazer um array de unidades diferentes
 
 p.add($unidade) => adiciona ao array
 
@@ -47,12 +47,12 @@ p.addConverting($unidadeCompativel) => adiciona ao array mas converte para a uni
 ## Iterators
 for () { }
 
-var p $m = [array]
+p $m = [array]
 
-for(var i in p) => i toma a $unidade de p, neste caso metros
+for(i in p) => i toma a $unidade de p, neste caso metros
 
 
-for(var i $cm in p) => como $cm é compatível com $m, i toma os valores convertidos p para $cm
+for(i $cm in p) => como $cm é compatível com $m, i toma os valores convertidos p para $cm
 
 while () { }
 
