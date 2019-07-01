@@ -14,7 +14,7 @@
 | Grandeza | Unidade | Símbolo
 | :-------------: | :-------------: | :-------------: |
 | Comprimento  | metro | m |
-| Massa | quilograma | kg |
+| Massa | grama | g |
 | Tempo | segundo  | s |
 
 #### https://pt.wikipedia.org/wiki/Sistema_Internacional_de_Unidades
