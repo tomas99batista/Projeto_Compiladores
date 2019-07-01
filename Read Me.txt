@@ -1,0 +1,18 @@
+Exemplo de alguns commando:
+
+!!para ver o resultado de cada commando 
+é preciso fazer 'print + (comando)'!!
+
+Comandos:		Resultado:
+a = 1m			(a = 1.0 m)
+a = a + 2m		(a = 3.0 m)
+a = 0.5m + 25cm	(a = 0.75 m)
+print a 		(imprime na consola o valor de a)
+
+1m + 0.5		(faz as contas mas não mostra na consola)
+print 1m + 0.5m	(imprime 1.5m)
+print 1mm+25cm 	(imprime o resultado na consola (0.251m))
+
+a to mm 		(converte o valor de a para mm)
+print 1m to in 	(converte 1m para inches e imprime o resultado na consola)
+print 1m+0.5cm to mm	(imprime o resultado em mm)
