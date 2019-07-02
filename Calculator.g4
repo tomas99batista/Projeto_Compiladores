@@ -9,7 +9,7 @@ main
 	| print
 	| expr
     //| iterator
-    //| statement
+    | statement
     ;
 
 
@@ -46,16 +46,16 @@ valor: Number ID;			// O id é usado para definir a grandeza
 
 
 
-//statement: 'if' '(' IFSTATEMENT ')' '{' CODE '}'
-//           | 'elif' '(' IFSTATEMENT ')' '{' CODE '}'
-//           | 'else' '{' CODE '}'
-//           ;
-//fragment IFSTATEMENT;
-//fragment CODE;
+statement:	'if' '(' condition ')' '{' main '}'
+			('elif' '(' condition ')' '{' main '}')*
+           ('else' '{' main '}')?
+           ;
 
 
+condition: left=expr Comparator right=expr;
+Comparator: ('>'|'>='|'=='|'!='|'<='|'<');
 
 
-ID : [A-Za-z_] [A-Za-z_0-9]* ;
+ID : [A-Za-z_] [A-Za-z_0-9/]* ;
 Number : [0-9]+ ('.' [0-9]+)*;
 WS: [ \n\t]+ -> skip ;
