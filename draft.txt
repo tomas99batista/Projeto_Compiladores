@@ -1,6 +1,0 @@
-<m, g, s>
-Declaração tipo
-
-Implementar no C.g4 
-
-https://tomassetti.me/antlr-mega-tutorial/
