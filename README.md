@@ -10,7 +10,7 @@ Projeto Compiladores - ANTLR4 | UA 2018/19
 
 [Vinícius Ribeiro](https://github.com/viniciusbenite "Vinícius Ribeiro")  	  | 82773
 
-[Bernardo Rodrigues](https://github.com/bernasrodrigues "Bernardo Rodrigues") 	| 88825
+[Bernardo Rodrigues](https://github.com/bernasrodrigues "Bernardo Rodrigues") 	| 88835
 
 
 ## Tema
