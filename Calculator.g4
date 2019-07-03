@@ -33,23 +33,14 @@ print: 'print' (expr|assignment) ;
 valor: Number ID;			// O id é usado para definir a grandeza
 
 
-
-//for: 'for' '(' FORSTATEMENT ')' '{' FORCODE '}';          #For
-//fragment FORSTATEMENT;
-//fragment FORCODE;
-
-
-
-//while: 'while' '(' WHILESTATEMENT ')' '{' WHILECODE '}';  #While
-//fragment WHILESTATEMENT;
-//fragment WHILECODE;
-
-
-
 statement:	'if' '(' condition ')' '{' main '}'
 			('elif' '(' condition ')' '{' main '}')*
            ('else' '{' main '}')?
            ;
+
+forStatement: 'for' '(' condition ')' '{' main '}';
+
+whileStatement: 'while' '(' condition ')' '{' main '}';
 
 
 condition: left=expr Comparator right=expr;
