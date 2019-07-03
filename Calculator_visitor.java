@@ -249,77 +249,11 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
      // FOR
      @Override
      public Pair visitForStatement(CalculatorParser.StatementContext ctx) {
- 
-         List<CalculatorParser.ConditionContext> conditions = ctx.condition();
-         int start = this.visit(ctx.expression(0)).asDouble().intValue();
-         int stop = this.visit(ctx.expression(1)).asDouble().intValue();
-
-         // boolean evaluatedCondition = false;
-         int temp = 0; // Variavel para guardar qual os comandos a executar quando é a conditicao é
-                       // verdadeira
- 
-         // Percorrer as condições
-         for (CalculatorParser.ConditionContext condition : conditions) {
-             Pair a = visit(condition.left);
-             Pair b = visit(condition.right);
- 
-             // Verificar se as duas grandezas são compativeis
-             if (!compativel(a, b)) {
-                 System.out.println("Valores incompativeis");
-                 System.exit(1);
-             }
- 
-             // Avaliar a condição
-             String op = condition.Comparator().getText();
-             if (avaliar(a, b, op)) {
-                 visit(ctx.main(0));
-                 return new Pair(0.0, "");
-             }
-             temp++;
-         }
- 
-         // Visitar o else caso os outros não sejam true
-         if (ctx.main(temp) != null)
-             visit(ctx.main(temp));
- 
-         return new Pair(0.0, "");
      }
  
       // WHILE
     @Override
     public Pair visitWhileStatement(CalculatorParser.StatementContext ctx) {
-
-        List<CalculatorParser.ConditionContext> conditions = ctx.condition();
-
-        // boolean evaluatedCondition = false;
-        int temp = 0; // Variavel para guardar qual os comandos a executar quando é a conditicao é
-                      // verdadeira
-
-        // Percorrer as condições
-        for (CalculatorParser.ConditionContext condition : conditions) {
-            Pair a = visit(condition.left);
-            Pair b = visit(condition.right);
-
-            // Verificar se as duas grandezas são compativeis
-            if (!compativel(a, b)) {
-                System.out.println("Valores incompativeis");
-                System.exit(1);
-            }
-
-            // Avaliar a condição
-            String op = condition.Comparator().getText();
-            if (avaliar(a, b, op)) {
-                visit(ctx.main(0));
-                return new Pair(0.0, "");
-            }
-            temp++;
-        }
-
-        // Visitar o else caso os outros não sejam true
-        if (ctx.main(temp) != null)
-            visit(ctx.main(temp));
-
-        return new Pair(0.0, "");
     }
 
 
