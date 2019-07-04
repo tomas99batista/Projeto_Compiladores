@@ -21,7 +21,7 @@ assignment
 
 
 expr	
-	: left=expr op=('*'|'/') right=expr		# MulDiv
+	: left=expr op=('*'|'//') right=expr	# MulDiv
 	| left=expr op=('+'|'-') right=expr		# AddSub
 	| valor									# Uni
 	| '(' expr ')'							# Para
@@ -30,7 +30,7 @@ expr
 
 print: 'print' (expr|assignment) ;
 
-valor: Number ID;			// O id é usado para definir a grandeza
+valor: Number ID ;	// O id é usado para definir a grandeza
 
 
 
@@ -46,9 +46,9 @@ valor: Number ID;			// O id é usado para definir a grandeza
 
 
 
-statement:	'if' '(' condition ')' '{' main '}'
-			('elif' '(' condition ')' '{' main '}')*
-           ('else' '{' main '}')?
+statement:		'if' '(' condition ')' '{' main '}'
+				('elif' '(' condition ')' '{' main '}')*
+           		('else' '{' main '}')?
            ;
 
 
@@ -56,6 +56,6 @@ condition: left=expr Comparator right=expr;
 Comparator: ('>'|'>='|'=='|'!='|'<='|'<');
 
 
-ID : [A-Za-z_] [A-Za-z_0-9/]* ;
-Number : [0-9]+ ('.' [0-9]+)*;
+ID : [A-Za-z_] [A-Za-z_0-9]* ('^' Number)? ('/' ID)? ;
+Number : '-'? [0-9]+ ('.' [0-9]+)*;
 WS: [ \n\t]+ -> skip ;
