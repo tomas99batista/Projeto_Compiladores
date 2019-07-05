@@ -8,8 +8,9 @@ main
 	: assignment
 	| print
 	| expr
-    //| iterator
+    //| for_statement
     | statement
+    | while_statement
     ;
 
 
@@ -24,6 +25,7 @@ expr
 	: left=expr op=('*'|'//') right=expr	# MulDiv
 	| left=expr op=('+'|'-') right=expr		# AddSub
 	| valor									# Uni
+	| Number								# Number
 	| '(' expr ')'							# Para
 	| ID 									# variable
 	;
@@ -34,15 +36,9 @@ valor: Number ID ;	// O id é usado para definir a grandeza
 
 
 
-//for: 'for' '(' FORSTATEMENT ')' '{' FORCODE '}';          #For
-//fragment FORSTATEMENT;
-//fragment FORCODE;
+//for: 'for' '(' FORSTATEMENT ')' '{' main+ '}';          
 
-
-
-//while: 'while' '(' WHILESTATEMENT ')' '{' WHILECODE '}';  #While
-//fragment WHILESTATEMENT;
-//fragment WHILECODE;
+while_statement: 'while' '(' condition ')' '{' main+ '}';
 
 
 

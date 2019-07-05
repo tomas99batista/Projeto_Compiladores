@@ -48,6 +48,20 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
         }
     };
 
+    // Tempo
+    Map<String, Double> tempo = new HashMap() {
+        {
+            // normal?
+            put("h", 3600.0);
+            put("min", 60.0);
+            put("s", 1.0);
+            put("ms", 0.001);
+            // outro
+            put("dia", 3600.0 * 24);
+            put("ano", 3600.0 * 24 * 365); // (outras unidades podem ser adicionadas)
+        }
+    };
+
     @Override
     public Pair visitPara(CalculatorParser.ParaContext ctx) {
         return visit(ctx.expr());
@@ -62,6 +76,12 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
         Pair a = visit(ctx.expr());
         variables.put(ctx.ID().getText(), a);
         // System.out.println(variables);
+        return a;
+    }
+
+    @Override
+    public Pair visitNumber(CalculatorParser.NumberContext ctx) {
+        Pair a = new Pair(Double.valueOf(ctx.Number().getText()), "");
         return a;
     }
 
@@ -80,7 +100,7 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
 
         Pair b = new Pair(a.getValor(), ctx.ID(1).getText());
         Double val = a.getValor() * conversor.get(a.getUnidade()) / conversor.get(ctx.ID(1).getText());
-        val = (double) Math.round(val * 100000d) / 100000d;
+        val = (double) Math.round(val * 10000000d) / 10000000d;
 
         Pair c = new Pair(val, b.getUnidade());
         variables.put(ctx.ID(0).getText(), c);
@@ -102,7 +122,7 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
         }
 
         Double val = a.getValor() * conversor.get(a.getUnidade()) / conversor.get(ctx.ID().getText());
-        val = (double) Math.round(val * 100000d) / 100000d;
+        val = (double) Math.round(val * 10000000d) / 10000000d;
         Pair c = new Pair(val, b.getUnidade());
         return c;
 
@@ -195,7 +215,6 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
 
         Double[] expoentes = { 1.0, 1.0, 1.0, 1.0 };
         // ordem: 10 m^1/s^2 * 10 cm^3/l^4 (expoentes: [1 , 2 , 3 ,4] )
-        //
 
         Pair mul_a = new Pair(a.getValor(), parts_a[0].split("\\^")[0]); // 10 m^2/g ---> 10 m
         Pair mul_b = new Pair(b.getValor(), parts_b[0].split("\\^")[0]);
@@ -236,6 +255,9 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
         div_a = convert_SI(div_a, expoentes[2]);
         div_b = convert_SI(div_b, expoentes[3]);
 
+        mul_a = new Pair(mul_a.getValor() / div_a.getValor(), mul_a.getUnidade());
+        mul_b = new Pair(mul_b.getValor() / div_b.getValor(), mul_b.getUnidade());
+
         // Valores obtidos
         // System.out.println("ok");---------------------------------------------------
         /**
@@ -250,9 +272,14 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
         // Fazer as contas-------------------------------------------------------------
         String op = ctx.op.getText();
         Pair c = new Pair(0.0, "");
-
         Double resultado = 0.0;
-        String[] unidade = { mul_a.getUnidade(), mul_b.getUnidade(), "/" + div_a.getUnidade(), div_b.getUnidade() };
+
+        DecimalFormat format = new DecimalFormat("0.#"); // Para remover zeros (3.0 -> 3 ; 4.50 -> 4.5)
+
+        String[] unidade = { mul_a.getUnidade(), " " + mul_b.getUnidade(), "/" + div_a.getUnidade(),
+                " " + div_b.getUnidade() };
+        // o " " + div_b.get... é para caso as duas grandezas de divisão não estarem
+        // relacionadas o resultado apresentado ficar mais legivel
 
         if (unidade[2].equals("/"))
             unidade[2] = "";
@@ -261,47 +288,16 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
          * Vai guardar o nome da unidade do resultado ----------------------------------
          * ex: 30cm/g^3 * 2m^2 ---------------------------------------------------------
          * unidade = [ cm , m , /g , ""]
-         * 
-         * 
-         * 
          */
 
-        DecimalFormat format = new DecimalFormat("0.#"); // Para remover zeros
-        /*
-         * if (op.equals("*")) { resultado = mul_a.getValor() * mul_b.getValor(); if
-         * (compativel(mul_a, mul_b)) {
-         * 
-         * if ((expoentes[0] + expoentes[1]) == 0.0) unidade[0] = ""; else unidade[0] =
-         * mul_a.getUnidade() + "^" + format.format(expoentes[0] + expoentes[1]);
-         * unidade[1] = ""; expoentes[0] += expoentes[1];
-         * 
-         * if (compativel(mul_a, div_b) && !div_b.getUnidade().equals("")) { if
-         * (expoentes[0] > expoentes[3]) { unidade[0] = mul_a.getUnidade() + "^" +
-         * format.format(expoentes[0] - expoentes[3]); unidade[0] =
-         * unidade[0].replace("1", ""); // quando a potencia é 1 unidade[3] = "";
-         * expoentes[3] = expoentes[3] - expoentes[0]; } else if (expoentes[0] <
-         * expoentes[3]) { unidade[0] = ""; unidade[3] = mul_a.getUnidade() + "^" +
-         * format.format(expoentes[0] + expoentes[3]); unidade[3] =
-         * unidade[3].replace("1", ""); // quando a potencia é 1 expoentes[3] =
-         * expoentes[3] - expoentes[0]; } else { unidade[0] = ""; unidade[3] = "";
-         * expoentes[3] = expoentes[3] - expoentes[0]; } }
-         * 
-         * unidade[2] = ""; if (compativel(div_a, div_b) &&
-         * !div_b.getUnidade().equals("") && !div_a.getUnidade().equals("")) { if
-         * ((expoentes[3] + expoentes[2]) == 0.0) { unidade[3] = ""; } else unidade[3] =
-         * div_a.getUnidade() + "^" + format.format(expoentes[2] + expoentes[3]);
-         * 
-         * } else if (div_b.getUnidade().equals("") && div_a.getUnidade().equals("")) {
-         * unidade[3] = ""; } else { unidade[3] = "/" + div_a.getUnidade() + " " +
-         * div_b.getUnidade(); }
-         * 
-         * } else {
-         * 
-         * } }
-         * 
-         * else { System.out.println(""); }
-         */
+        // (Debug)
+        // System.out.println(mul_a);
+        // System.out.println(mul_b);
+        // System.out.println(div_a);
+        // System.out.println(div_b);
+
         if (op.equals("*")) {
+
             resultado = mul_a.getValor() * mul_b.getValor();
             // ------------------//
             if (compativel(mul_a, div_a)) {
@@ -312,6 +308,9 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
                     unidade[0] = "";
                 }
                 div_a = new Pair(0.0, "");
+            } else {
+                unidade[0] = mul_a.getUnidade() + "^" + format.format(expoentes[0]);
+                unidade[1] = mul_b.getUnidade() + "^" + format.format(expoentes[1]);
             }
             if (compativel(mul_a, div_b)) {
                 unidade[0] = mul_a.getUnidade() + "^" + format.format(expoentes[0] - expoentes[3]);
@@ -379,14 +378,94 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
 
             }
 
+        } else { // DIVISÃO ----------------------------------------------------------
+            resultado = mul_a.getValor() / mul_b.getValor();
+            if (compativel(mul_a, div_a)) {
+                unidade[0] = mul_a.getUnidade() + "^" + format.format(expoentes[0] - expoentes[2]);
+                unidade[2] = "";
+                expoentes[0] -= expoentes[2];
+                if (expoentes[0] - expoentes[2] == 0.0) {
+                    unidade[0] = "";
+                }
+                div_a = new Pair(0.0, "");
+            }
+            if (compativel(mul_a, div_b)) {
+                unidade[0] = mul_a.getUnidade() + "^" + format.format(expoentes[0] + expoentes[3]);
+                unidade[3] = "";
+                expoentes[0] += expoentes[3];
+                if (expoentes[0] + expoentes[3] == 0.0) {
+                    unidade[0] = "";
+                }
+                div_b = new Pair(0.0, "");
+
+            }
+            if (compativel(mul_a, mul_b)) {
+                unidade[0] = mul_a.getUnidade() + "^" + format.format(expoentes[0] - expoentes[1]);
+                unidade[1] = "";
+                expoentes[0] -= expoentes[1];
+                if (expoentes[0] - expoentes[1] == 0.0) {
+                    unidade[0] = "";
+                }
+                mul_b = new Pair(0.0, "");
+            }
+            // ------------------//
+            if (compativel(div_a, mul_b)) {
+                if (expoentes[1] + expoentes[2] == 0.0) {
+                    unidade[1] = "";
+                    unidade[2] = "";
+                } else if (expoentes[2].compareTo(expoentes[1]) > 0) {
+                    unidade[1] = "";
+                    unidade[2] = "/" + div_a.getUnidade() + "^" + format.format(expoentes[2] + expoentes[1]);
+                } else {
+                    unidade[1] = "/" + div_a.getUnidade() + "^" + format.format(expoentes[2] + expoentes[1]);
+                    unidade[2] = "";
+                }
+                expoentes[2] += expoentes[1];
+                mul_b = new Pair(0.0, "");
+            }
+            if (compativel(div_a, div_b)) {
+                if (expoentes[3] + expoentes[2] == 0.0) {
+                    unidade[3] = "";
+                    unidade[2] = "";
+                } else if (expoentes[2].compareTo(expoentes[3]) > 0) {
+                    unidade[3] = "";
+                    unidade[2] = "/" + div_a.getUnidade() + "^" + format.format(expoentes[2] + expoentes[3]);
+                } else {
+                    unidade[3] = "/" + div_a.getUnidade() + "^" + format.format(expoentes[2] + expoentes[3]);
+                    unidade[2] = "";
+                }
+                expoentes[2] += expoentes[3];
+                div_b = new Pair(0.0, "");
+
+            }
+            // ------------------//
+            if (compativel(mul_b, div_b)) {
+                if (expoentes[3] + expoentes[1] == 0.0) {
+                    unidade[3] = "";
+                    unidade[1] = "";
+                } else if (expoentes[1].compareTo(expoentes[3]) > 0) {
+                    unidade[3] = "";
+                    unidade[1] = div_a.getUnidade() + "^" + format.format(expoentes[1] - expoentes[3]);
+                } else {
+                    unidade[3] = div_a.getUnidade() + "^" + format.format(expoentes[1] - expoentes[3]);
+                    unidade[1] = "";
+                }
+                div_b = new Pair(0.0, "");
+                expoentes[1] -= expoentes[3];
+
+            }
+
         }
 
         String unidadefinal = "";
 
         for (String fin : unidade) {
-            unidadefinal += fin;
+            if (fin.contains("^0"))
+                fin = "";
+            unidadefinal += fin.replace("^1", "");
         }
 
+        resultado = (double) Math.round(resultado * 10000000d) / 10000000d; // arredondar
         c = new Pair(resultado, unidadefinal);
 
         return c;
@@ -429,6 +508,28 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
         return new Pair(0.0, "");
     }
 
+    @Override
+    public Pair visitWhile_statement(CalculatorParser.While_statementContext ctx) {
+
+        while (true) {
+            Pair a = visit(ctx.condition().left);
+            Pair b = visit(ctx.condition().right);
+            String op = ctx.condition().Comparator().getText();
+
+            if (!avaliar(a, b, op)) {
+                break;
+            }
+
+            List<CalculatorParser.MainContext> mains = ctx.main();
+            for (CalculatorParser.MainContext main : mains)
+                visit(main);
+
+        }
+
+        return new Pair(0.0, "");
+
+    }
+
     // -------------------------------------------------------------------------------------------------------------------//
 
     // Verifica se são compativeis
@@ -447,8 +548,10 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
         } else if (massa.containsKey(aa) && massa.containsKey(bb)) {
             // System.out.println("compativeis");
             return true;
-        } else
-            return false;
+        } else if (tempo.containsKey(aa) && tempo.containsKey(bb)) {
+            return true;
+        }
+        return false;
 
     }
 
@@ -493,7 +596,7 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
         Double mult = conversor.get(a.getUnidade());
         Double resultado = a.getValor() * mult;
 
-        return (double) Math.round(resultado * 100000d) / 100000d;
+        return (double) Math.round(resultado * 10000000d) / 10000000d;
     }
 
     // Avalia o resultado de 2 comparações
@@ -542,8 +645,9 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
             conversor = distancia;
         else if (massa.containsKey(a.getUnidade()))
             conversor = massa;
-        // else if (tempo.containsKey(a.getUnidade()))
-        // conversor = tempo;
+        else if (tempo.containsKey(a.getUnidade()))
+            conversor = tempo;
+        // (Podem-se adicionar mais conversores consoante a necessidade)
 
         return conversor;
     }
@@ -553,7 +657,7 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
     public Pair convert_SI(Pair a, Double exp) {
 
         if (a.getUnidade().equals("")) { // Em situações na mult/div em que (a = 2m/g) o a --> 2m/ 1 ""
-            a = new Pair(1.0, "");
+            a = new Pair(a.getValor(), "");
             return a;
         }
 
@@ -561,7 +665,7 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
         Map<String, Double> conversor = getConversor(a); // dicionario para saber qual o tipo de grandeza
         Double temp = a.getValor() * Math.pow(conversor.get(a.getUnidade()), exp);
 
-        temp = (double) Math.round(temp * 100000d) / 100000d; // arredondar
+        temp = (double) Math.round(temp * 10000000d) / 10000000d; // arredondar
         boolean d = true; // Para quando o Pair não tem dimensão ( em situações em que na mult/div
                           // 1cm ----> será separado em (1cm / 1 ""))
         Double value = 1.0;
