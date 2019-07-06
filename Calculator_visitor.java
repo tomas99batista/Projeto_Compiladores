@@ -301,6 +301,7 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
             resultado = mul_a.getValor() * mul_b.getValor();
             // ------------------//
             if (compativel(mul_a, div_a)) {
+                // System.out.println("0");
                 unidade[0] = mul_a.getUnidade() + "^" + format.format(expoentes[0] - expoentes[2]);
                 unidade[2] = "";
                 expoentes[0] -= expoentes[2];
@@ -313,6 +314,7 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
                 unidade[1] = mul_b.getUnidade() + "^" + format.format(expoentes[1]);
             }
             if (compativel(mul_a, div_b)) {
+                // System.out.println("1");
                 unidade[0] = mul_a.getUnidade() + "^" + format.format(expoentes[0] - expoentes[3]);
                 unidade[3] = "";
                 expoentes[0] -= expoentes[3];
@@ -323,6 +325,7 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
 
             }
             if (compativel(mul_a, mul_b)) {
+                // System.out.println("2");
                 unidade[0] = mul_a.getUnidade() + "^" + format.format(expoentes[0] + expoentes[1]);
                 unidade[1] = "";
                 expoentes[0] += expoentes[1];
@@ -333,7 +336,10 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
             }
             // ------------------//
             if (compativel(div_a, mul_b)) {
-                if (expoentes[1] - expoentes[2] == 0.0) {
+                // System.out.println("3");
+                if (div_a.getUnidade().equals("") && mul_b.getUnidade().equals("")) {
+                    ; // Evitar erros
+                } else if (expoentes[1] - expoentes[2] == 0.0) {
                     unidade[1] = "";
                     unidade[2] = "";
                 } else if (expoentes[2].compareTo(expoentes[1]) > 0) {
@@ -347,7 +353,10 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
                 mul_b = new Pair(0.0, "");
             }
             if (compativel(div_a, div_b)) {
-                if (expoentes[3] + expoentes[2] == 0.0) {
+                // System.out.println("4");
+                if (div_a.getUnidade().equals("") && div_b.getUnidade().equals("")) {
+                    ;
+                } else if (expoentes[3] + expoentes[2] == 0.0) {
                     unidade[3] = "";
                     unidade[2] = "";
                 } else if (expoentes[2].compareTo(expoentes[3]) > 0) {
@@ -363,7 +372,10 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
             }
             // ------------------//
             if (compativel(mul_b, div_b)) {
-                if (expoentes[3] + expoentes[1] == 0.0) {
+                // System.out.println("5");
+                if (mul_b.getUnidade().equals("") && div_b.getUnidade().equals("")) {
+                    ;
+                } else if (expoentes[3] + expoentes[1] == 0.0) {
                     unidade[3] = "";
                     unidade[1] = "";
                 } else if (expoentes[1].compareTo(expoentes[3]) > 0) {
@@ -410,7 +422,9 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
             }
             // ------------------//
             if (compativel(div_a, mul_b)) {
-                if (expoentes[1] + expoentes[2] == 0.0) {
+                if (div_a.getUnidade().equals("") && mul_b.getUnidade().equals("")) {
+                    ;
+                } else if (expoentes[1] + expoentes[2] == 0.0) {
                     unidade[1] = "";
                     unidade[2] = "";
                 } else if (expoentes[2].compareTo(expoentes[1]) > 0) {
@@ -424,7 +438,9 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
                 mul_b = new Pair(0.0, "");
             }
             if (compativel(div_a, div_b)) {
-                if (expoentes[3] + expoentes[2] == 0.0) {
+                if (div_a.getUnidade().equals("") && div_b.getUnidade().equals("")) {
+                    ;
+                } else if (expoentes[3] + expoentes[2] == 0.0) {
                     unidade[3] = "";
                     unidade[2] = "";
                 } else if (expoentes[2].compareTo(expoentes[3]) > 0) {
@@ -440,7 +456,9 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
             }
             // ------------------//
             if (compativel(mul_b, div_b)) {
-                if (expoentes[3] + expoentes[1] == 0.0) {
+                if (mul_b.getUnidade().equals("") && div_b.getUnidade().equals("")) {
+                    ;
+                } else if (expoentes[3] + expoentes[1] == 0.0) {
                     unidade[3] = "";
                     unidade[1] = "";
                 } else if (expoentes[1].compareTo(expoentes[3]) > 0) {
@@ -460,6 +478,7 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
         String unidadefinal = "";
 
         for (String fin : unidade) {
+            // System.out.println(fin);
             if (fin.contains("^0"))
                 fin = "";
             unidadefinal += fin.replace("^1", "");
