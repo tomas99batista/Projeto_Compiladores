@@ -495,13 +495,16 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
             // Avaliar a condição
             String op = condition.Comparator().getText();
             if (avaliar(a, b, op)) {
-                visit(ctx.main(0));
+                List<CalculatorParser.MainContext> mains = ctx.main();
+                for (CalculatorParser.MainContext if_main : mains) {
+                    visit(if_main);
+                }
                 return new Pair(0.0, "");
             }
             temp++;
         }
 
-        // Visitar o else caso os outros não sejam true
+        // Visitar o else (caso exista) e caso os outros não sejam true
         if (ctx.main(temp) != null)
             visit(ctx.main(temp));
 
@@ -530,6 +533,30 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
 
     }
 
+    @Override
+    public Pair visitFor_statement(CalculatorParser.For_statementContext ctx) {
+        Pair d = visit(ctx.expr(0));
+        variables.put(ctx.ID(0).getText(), d);
+
+        while (true) {
+            Pair a = visit(ctx.condition().left);
+            Pair b = visit(ctx.condition().right);
+            String op = ctx.condition().Comparator().getText();
+
+            if (avaliar(a, b, op)) {
+                break;
+            }
+            List<CalculatorParser.MainContext> mains = ctx.main();
+            for (CalculatorParser.MainContext main : mains)
+                visit(main);
+
+            Pair c = visit(ctx.expr(1));
+            variables.put(ctx.ID(1).getText(), c);
+        }
+        return new Pair(0.0, "");
+
+    }
+
     // -------------------------------------------------------------------------------------------------------------------//
 
     // Verifica se são compativeis
@@ -537,6 +564,9 @@ public class Calculator_visitor extends CalculatorBaseVisitor<Pair> {
 
         String aa = a.getUnidade().split("^")[0]; // ex: 1 m^2 + 1 cm^2
         String bb = b.getUnidade().split("^")[0];
+        if (a.getUnidade().equals("") && b.getUnidade().equals("")) {
+            return true;
+        }
 
         if (a.getUnidade().equals("") || b.getUnidade().equals("")) {
             return false;

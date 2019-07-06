@@ -10,7 +10,11 @@ public class CalculatorMain {
       String line = "";
 
       while (true) {
-         line = sc.nextLine();
+         try {
+            line = sc.nextLine();
+         } catch (NoSuchElementException e) {
+            System.exit(0);
+         }
          // create a CharStream that reads from standard input:
          CharStream input = CharStreams.fromString(line);
          // create a lexer that feeds off of input CharStream:
