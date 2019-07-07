@@ -1,0 +1,9 @@
+a = 1m
+b = 2m
+
+c = a + a + a
+print c
+
+
+d = a + b + 6 m
+print d
