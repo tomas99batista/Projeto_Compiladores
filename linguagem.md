@@ -8,27 +8,25 @@ Tempo -> segundo (s)
 
 
 ## Variáveis
-varName $unidade = x  // Definição da variável, unidade e valor
-
-    varName = z    // Redefinição do valor da variável mas não da unidade
+varName = x unidade  // Definição da variável, unidade e valor
     
-    varName $outraUnidadeCompativel    // Redefinição da unidade da variável para outra unidade compatível
+    varName to outraUnidadeCompativel    // Redefinição da unidade da variável para outra unidade compatível
     
 
 // Exemplo:
 
-p $m = 5    // p = 5 metros
+p = 5 m    // p = 5 metros
 
 ### Operação com variáveis
 SI = grama | metro | segundo
 
-$SI x $SI => $SI
+SI x SI => SI
 
-$SI x $NaoSI => $SI
+SI x NaoSI => SI
 
-$NaoSI x $NaoSI => $SI
+NaoSI x NaoSI => SI
 
-    mas: se ambas as NaoSI forem iguais entao fica => $SI
+    mas: se ambas as NaoSI forem iguais entao fica => SI
 
 Caso especifiado qual a unidade que quer, converte para a unidade pedida, exemplo:
 
@@ -37,22 +35,16 @@ $m($mm x $mm) // Converte para metros
 p $mm = $m x $m //Converte para milímetro porque foi pedido na definição da variável
 
 ## Colections
-varName $unidade = [x, y, z]    // x, y, z têm todos a mesma unidade, impossível fazer um array de unidades diferentes
+varName = [x, y, z]    // x, y, z têm todos a mesma unidade, impossível fazer um array de unidades diferentes
 
-p.add($unidade) => adiciona ao array
-
-p.addConverting($unidadeCompativel) => adiciona ao array mas converte para a unidade definida
-
+p.add() => adiciona ao array
 
 ## Iterators
 for () { }
 
-p $m = [array]
+p = [array]
 
-for(i in p) => i toma a $unidade de p, neste caso metros
-
-
-for(i $cm in p) => como $cm é compatível com $m, i toma os valores convertidos p para $cm
+for(i in p) => i toma a unidade de p, neste caso é por exemplo metros
 
 while () { }
 
@@ -72,32 +64,21 @@ switch () {
 ## Comparadores
 <, >, >=, <=, ==, !=, ===, !==
 
-== / !=     Compara o valor e a $unidade
+== / !=     Compara o valor e a unidade
 
-=== / !===  Compara apenas a $unidade
+=== / !===  Compara apenas a unidade
 
 ## Booleanos
 true / false
 
 Pode ser usado com if/else statements
 
-## Unidades
-$unidade #y     //fica 10x y acima da unidade atual
-
-    // y pode ser positivou ou negativo
-    
-Exemplo:
-
-$m #1   // 10x acima do metro
-
-$m #-1  // 10x abaixo do metro
-
 ## Funções
-function funtionName ($unidade arg // arg){
+function funtionName (arg unidade // arg){
 
     ...
     
-    return $unidade
+    return unidade
     
     return varName
     
